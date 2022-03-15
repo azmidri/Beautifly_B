@@ -1,17 +1,12 @@
-##  azmidri 
 from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
 class WOE(BaseEstimator, TransformerMixin):
     def __init__(self):
-        super().__init__()
+        super().__init__() 
         self.WOE_ = {}
 
     def fit(self, X, colname, targetname):
-        if not isinstance(X, pd.DataFrame):
-            raise TypeError("input must be a dataframe type")
-        if len(X)==0:
-            raise ValueError('input dataframe is not initiated.')
         woe_df = X.groupby(colname, as_index=False).agg({targetname: ['sum', 'count']})
         woe_df.columns = [colname, 'one', 'total']
         woe_df['zero'] = woe_df.total - woe_df.one
@@ -25,9 +20,8 @@ class WOE(BaseEstimator, TransformerMixin):
         
 
     def transform(self, X, colname, targetname):
-        if len(X)==0:
-            raise ValueError('input dataframe is not initiated.')
-        if not isinstance(X, pd.DataFrame):
-            raise TypeError("input must be a dataframe type")
         X.loc[:,colname] = pd.merge(X[colname], self.WOE_[colname][[colname, 'woe']], how='left')['woe'].values
         return X
+
+    def get_WOE_dict(self):
+        return self.WOE_

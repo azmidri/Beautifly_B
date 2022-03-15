@@ -21,10 +21,10 @@ from sklearn.preprocessing import OneHotEncoder
 pd.options.mode.chained_assignment = None
 
 ## custom classes
-from woe import WOE
-from print_msg import Print_Msg
-from stats_bs import Stats_BS
-from ordinal import Ordinal
+from .woe import WOE
+from .print_msg import Print_Msg
+from .stats_bs import Stats_BS
+from .ordinal import Ordinal
 ## 
 
 pd.options.plotting.backend = 'holoviews'
@@ -78,10 +78,8 @@ class BrushingDataframe(pd.DataFrame):
                 if key in self.columns:
                     try:
                         self[key] = self[key].astype(vartype)
-                    except ValueError:
-                        print("The column {} contains invalid values".format(str(key)))
-                    except TypeError:
-                        print("Undefined type {}".format(str(vartype)))
+                    except:
+                        print("Undefied type {}".format(str(vartype)))
                 else:
                     print("The dataframe does not contain variable {}.".format(str(key)))
         else:
@@ -195,6 +193,7 @@ class BrushingDataframe(pd.DataFrame):
         for feature in types_df['Features']:
             unique_feat.append(int(self[feature].nunique() / self.shape[0] * 100))
         types_df["Unique Vs Rows %"]  =   unique_feat
+        types_df ['Features'] = types_df ["Features"].astype(str)
         types_df.loc[(types_df['Data Types'].str.contains("object", case=False)) & (types_df['Features'].str.contains("date", case=False) ),"Recomendation"] = "Consider convert to Date or Time type"
         types_df.loc[(types_df["Unique Vs Rows %"] > 5) & (types_df['Data Types'] == 'object') ,"Recomendation"] = "High unique categories and should be removed or transformed"
         types_df.loc[(types_df["Unique Vs Rows %"] > 80) ,"Recomendation"] = "Suspected record ID and will be removed"
@@ -203,7 +202,7 @@ class BrushingDataframe(pd.DataFrame):
         ## Plot Histogram for numericals
         hist_plots = []
         for column in self._get_numeric_data().columns:
-            hist_plots.append(self[column].plot.hist(bins=100, bin_range=(0, self[column].max()), title='Histogram and Box Plot ' + column).opts(width=800))
+            hist_plots.append(self[column].plot.hist(bins=100, bin_range=(0, self[column].max()), title='Histogram and Box Plot ' + str(column)).opts(width=800))
             hist_plots.append(self[column].plot.box(invert=True).opts(xrotation=90,width=800))
         
         histplots = hv.Layout(hist_plots)
@@ -322,11 +321,13 @@ L        List containing train-test split of inputs.
                 df[month] = df[column].dt.month_name()
                 Print_Msg.print_msg1("Transformed {0} from Date to Month".format(column))
                 #log_recom.append("Create new feature based on refference day ")
-                if (column != reference_date) and (reference_date != ''):
+                if (column != reference_date) and (reference_date != '') and (reference_date in list(df.columns)):
                     new_column = str(reference_date)+"___"+str(column)
                     df[new_column] = abs(df[column] - pd.to_datetime(df[reference_date]))
                     df[new_column] = df[new_column].dt.days
                     Print_Msg.print_msg1("Transformed {0} from Date to number {1} \n of days based on target {2} ".format(column,new_column,reference_date))
+                else:
+                    Print_Msg.print_msg1("{0} is an invalid feature please enter valid date feature".format(reference_date))
 
             
         ## remove feature with same number of records
