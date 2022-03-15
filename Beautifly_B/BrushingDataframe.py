@@ -163,11 +163,6 @@ class BrushingDataframe(pd.DataFrame):
 
 
         """
-        #if not isinstance(self, pd.DataFrame):
-        #    raise TypeError("**************input must be a dataframe type*************")
-        #print('************Checkking type***********')
-        #print(isinstance(self, pd.DataFrame))
-        #print('what happened??????????')
 
         if input_vars:
             self = self[input_vars]
