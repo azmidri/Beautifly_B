@@ -290,6 +290,9 @@ L        List containing train-test split of inputs.
         myrdf = bdf.BrushingDataframe(dataframe)
         myrdf.cleaning_missing()
         myrdf.scanning() 
+        X_train, X_test, y_train, y_test, feature_names  = myrdf.recommended_transformation(ordinal_vars = ['ACCOUNT_NUMBER'],
+                                                                     WOE_tresh = 13,reference_date="CUSTOMER_OPEN_DATE",
+                                                                  target = "BINARIZED_TARGET",scaler = True)
 
         Important
         The current version of Beautifly_B provides recommendation of data preparation for binary classification only.
