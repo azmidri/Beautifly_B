@@ -78,8 +78,10 @@ class BrushingDataframe(pd.DataFrame):
                 if key in self.columns:
                     try:
                         self[key] = self[key].astype(vartype)
-                    except:
-                        print("Undefied type {}".format(str(vartype)))
+                    except ValueError:
+                        print("The column {} contains invalid values".format(str(key)))
+                    except TypeError:
+                        print("Undefined type {}".format(str(vartype)))
                 else:
                     print("The dataframe does not contain variable {}.".format(str(key)))
         else:
