@@ -18,8 +18,8 @@ sample_4a = pd.DataFrame({'country': ['france', 'spain', 'france', 'france','spa
 'target':[1,np.nan,1,0,0,1]})
 sample_5 = pd.DataFrame()
 sample_6 = pd.array([1, 2])
-sample_7 = pd.DataFrame({'country': [1, 0, 1, 1,0,1],
-'target':[1,1,1,0,0,1]})
+sample_7 = pd.DataFrame({'country': [1, 0, 1, 1,0,1],'target':[1,1,1,0,0,1]})
+sample_8 = pd.DataFrame({'country': [2, 0, 2, 2,0,2],'target':[1,1,1,0,0,1]})
 class TestWOE(unittest.TestCase):
     def test_basic_WOE(self):
         my_WOE = WOE()
@@ -70,3 +70,8 @@ class TestWOE(unittest.TestCase):
         my_WOE.fit(sample_7,'country','target')
         sample_7.loc[:,'country'] = my_WOE.transform(sample_7,'country','target')
         self.assertAlmostEqual(round(sample_7.loc[:,'country'][0],6),0.405465)
+    def test_numericInput2_WOE(self):
+        my_WOE = WOE()
+        my_WOE.fit(sample_8,'country','target')
+        sample_8.loc[:,'country'] = my_WOE.transform(sample_8,'country','target')
+        self.assertAlmostEqual(round(sample_8.loc[:,'country'][0],6),0.405465)

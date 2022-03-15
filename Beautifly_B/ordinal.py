@@ -12,11 +12,17 @@ class Ordinal():
             make_ordinal(122) => '122nd'
             make_ordinal(213) => '213th'
         '''
-        n = int(n)
-        if 11 <= (n % 100) <= 13:
-            suffix = 'th'
-        else:
-            suffix = ['th', 'st', 'nd', 'rd', 'th'][min(n % 10, 4)]
-        return str(n) + suffix
+        try:
+            n = int(n)
+            if 11 <= (n % 100) <= 13:
+                suffix = 'th'
+            else:
+                suffix = ['th', 'st', 'nd', 'rd', 'th'][min(n % 10, 4)]
+            return str(n) + suffix
+        except:
+            print("Input value is not a valid number")
+            pass
+            
+        
 
 
