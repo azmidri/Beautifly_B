@@ -50,4 +50,24 @@ class TestScanning(unittest.TestCase):
         self.assertAlmostEqual(missing_myrdf['num_legs'][2],0.0)
         self.assertAlmostEqual(missing_myrdf['num_specimen_seen'][1],8.0)
         self.assertIn(missing_myrdf['name'][3].lower(),'teamb')
-    
+    def test_cleaning_missing_array(self):
+        self.assertAlmostEqual(sample_myarray.cleaning_missing()[0][0],1.0)
+    def test_cleaning_missing_empty(self):
+        empty_myrdf.cleaning_missing()
+    def test_scanning(self):
+        sample_df = pd.DataFrame({'num_legs': [2, 4, 8, 0],
+                   'num_wings': [2, 0, 0, 0],
+                   'num_specimen_seen': [10, 2, 1, 8]})
+        sample_myrdf = bdf.BrushingDataframe(sample_df)
+        capturedOutput = io.StringIO()                  
+        sys.stdout = capturedOutput    
+        sample_myrdf.scanning()
+        sys.stdout = sys.__stdout__                     
+        captured = capturedOutput.getvalue()   
+        self.assertTrue("data scan and visualization is reported under beutifly_b eda.html." in captured.lower())
+    def test_scanning_array(self):
+        sample_array = pd.array([1, 2])
+        sample_myarray = bdf.BrushingDataframe(sample_array)
+        self.assertRaises(TypeError,sample_myarray.scanning())
+    def test_cleaning_missing_empty(self):
+        empty_myrdf.scanning()
