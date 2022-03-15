@@ -1,5 +1,5 @@
 # Beautifly_B
-Beautifly_B is an open-source Python library that generates beautiful, high-density visualizations to kickstart EDA (Exploratory Data Analysis) with just Few lines of code. This package also provides functions to do data cleaning , scanning of data to understand the details of features and as well provides function for transformation . This provides Output with a fully self-contained HTML application.
+Beautifly_B is an open-source Python library that generates beautiful, high-density visualizations to kickstart EDA (Exploratory Data Analysis) with just Few lines of code. This package also provides functions to do data cleaning , scanning of data to understand the details of features and as well provides function for transformation to prepare for model training . This provides Output with a fully self-contained HTML application.
 
 The system is built around quickly visualizing target values and comparing datasets. Its goal is to help quick analysis of target characteristics other such data characterization tasks.
 
