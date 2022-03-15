@@ -7,7 +7,9 @@ Created on 4th March 2022
 
 import pandas as pd
 import numpy as np
+
 #import matplotlib.pyplot as plt
+
 from sklearn.preprocessing import MinMaxScaler
 from sklearn import preprocessing
 import holoviews as hv; hv.extension('bokeh', 'matplotlib')
@@ -77,7 +79,7 @@ class BrushingDataframe(pd.DataFrame):
                     try:
                         self[key] = self[key].astype(vartype)
                     except:
-                        print("Undefined type {}".format(str(vartype)))
+                        print("Undefied type {}".format(str(vartype)))
                 else:
                     print("The dataframe does not contain variable {}.".format(str(key)))
         else:
@@ -141,6 +143,12 @@ class BrushingDataframe(pd.DataFrame):
           A print with the analysis or new clean columns .
 
         """
+        #if not isinstance(self, pd.DataFrame):
+        #    raise TypeError("**************input must be a dataframe type*************")
+        #print('************Checkking type***********')
+        #print(isinstance(self, pd.DataFrame))
+        #print('what happened??????????')
+
         if input_vars:
             self = self[input_vars]
 
@@ -221,6 +229,7 @@ class BrushingDataframe(pd.DataFrame):
         -------
           A print with the analysis or new transformed columns.                
         """
+
         df = self.copy()
         if input_vars:
             df = df[input_vars]
