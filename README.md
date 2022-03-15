@@ -34,7 +34,7 @@ Some people have experienced mixed results behavior upgrading through pip. To up
 -----------------------------------------------------------------------------------------------------------------
 Using pip
 -----------------------------------------------------------------------------------------------------------------
-The best way to install sweetviz (other than from source) is to use pip:
+The best way to install Beautifly_B (other than from source) is to use pip:
 
 pip install Beautifly_B
 
