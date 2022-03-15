@@ -8,6 +8,8 @@ class WOE(BaseEstimator, TransformerMixin):
         self.WOE_ = {}
 
     def fit(self, X, colname, targetname):
+        if not isinstance(X, pd.DataFrame):
+            raise TypeError("input must be a dataframe type")
         if len(X)==0:
             raise ValueError('input dataframe is not initiated.')
         woe_df = X.groupby(colname, as_index=False).agg({targetname: ['sum', 'count']})
@@ -25,5 +27,7 @@ class WOE(BaseEstimator, TransformerMixin):
     def transform(self, X, colname, targetname):
         if len(X)==0:
             raise ValueError('input dataframe is not initiated.')
+        if not isinstance(X, pd.DataFrame):
+            raise TypeError("input must be a dataframe type")
         X.loc[:,colname] = pd.merge(X[colname], self.WOE_[colname][[colname, 'woe']], how='left')['woe'].values
         return X

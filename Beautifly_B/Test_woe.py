@@ -18,6 +18,8 @@ sample_4a = pd.DataFrame({'country': ['france', 'spain', 'france', 'france','spa
 'target':[1,np.nan,1,0,0,1]})
 sample_5 = pd.DataFrame()
 sample_6 = pd.array([1, 2])
+sample_7 = pd.DataFrame({'country': [1, 0, 1, 1,0,1],
+'target':[1,1,1,0,0,1]})
 class TestWOE(unittest.TestCase):
     def test_basic_WOE(self):
         my_WOE = WOE()
@@ -56,6 +58,15 @@ class TestWOE(unittest.TestCase):
         my_WOE = WOE()
         my_WOE.fit(sample_1,'country','target')
         self.assertRaises(ValueError,my_WOE.transform,sample_5,'country','target')
-    #def test_fit_emptyarray_WOE(self):
-    #    my_WOE = WOE()
-    #    self.assertRaises(ValueError,my_WOE.fit,sample_6,'country','target')
+    def test_fit_type_WOE(self):
+        my_WOE = WOE()
+        self.assertRaises(TypeError,my_WOE.fit,sample_6,'country','target')
+    def test_transform_type_WOE(self):
+        my_WOE = WOE()
+        my_WOE.fit(sample_1,'country','target')
+        self.assertRaises(TypeError,my_WOE.transform,sample_6,'country','target')
+    def test_numericInput_WOE(self):
+        my_WOE = WOE()
+        my_WOE.fit(sample_7,'country','target')
+        sample_7.loc[:,'country'] = my_WOE.transform(sample_7,'country','target')
+        self.assertAlmostEqual(round(sample_7.loc[:,'country'][0],6),0.405465)
