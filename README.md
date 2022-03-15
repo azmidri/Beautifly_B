@@ -22,6 +22,9 @@ Features
   - Automatically detects numerical, categorical and text features, with optional manual overrides 
 - **Summary information** 
   - Type, unique values, missing values, duplicate rows, most frequent values
+- **Recomendation and Transformation** 
+  - The recommended transformation provides several transformation and conversions that prepares data to be ready for model training and prediction.
+  
   
 -----------------------------------------------------------------------------------------------------------------
 Upgrading 
