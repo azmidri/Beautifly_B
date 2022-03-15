@@ -88,14 +88,24 @@ class BrushingDataframe(pd.DataFrame):
 #-----------------------------------------------------------------------------    
     def cleaning_missing(self, input_vars=[] ):
         """
-        TO BE IMPLEMENTED: data cleaning (provide methods for data scanning and cleaning, 
-            for example: scan each column, indicating if droping or keeping the variable for 
-            modelling and why, for the ones keeping indicates which cleaning / transformation 
-            is recommended for the missing values and if scalling / dummy creation is recommended, 
-            if not always inform that is not necessary);
+        The cleaning missing will identfy Null values and replace the missing value with median for numerial and mode of objects
+        Parameters
+        ----------
+        input_vars: list, default=Empty
+        List of selected features. Default is empty where all columns will be included.
+
         Returns
         -------
-          A print with the analysis or new clean columns .
+          A print with the analysis and clean dataframe
+
+        Examples
+        --------
+        import pandas as pd
+        import Beautifly_B.BrushingDataframe as bdf
+        dataframe = pd.read_csv("AUTO_LOANS_DATA.csv", sep=";")
+        dataframe['BINARIZED_TARGET'] = dataframe['BUCKET'].apply(lambda x: 1 if x>0 else 0)
+        myrdf = bdf.BrushingDataframe(dataframe)
+        myrdf.cleaning_missing()
 
         """
         if input_vars:
@@ -105,14 +115,17 @@ class BrushingDataframe(pd.DataFrame):
         # Replace NaNs with the median or mode of the column depending on the column type
             try:
                 self[column].fillna(self[column].median(), inplace=True)
+                Print_Msg.print_msg1("Impute Null values of {0} with median ".format(column))
             except TypeError:
                 self[column] = self[column].str.lower()
                 most_frequent = self[column].mode()
                 if len(most_frequent) > 0:
                     self[column].fillna(self[column].mode()[0], inplace=True)
+                    Print_Msg.print_msg1("Impute Null values of {0} with mode ".format(column))
                 else:
                     self[column].fillna(method='bfill', inplace=True)
                     self[column].fillna(method='ffill', inplace=True)
+                    Print_Msg.print_msg1("Impute Null values of {0} with bfill/ffill ".format(column))
    
         return self
     def scanning(self, input_vars=[] ):
