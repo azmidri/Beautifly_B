@@ -79,7 +79,7 @@ class BrushingDataframe(pd.DataFrame):
                     try:
                         self[key] = self[key].astype(vartype)
                     except:
-                        print("Undefined type {}".format(str(vartype)))
+                        print("Undefied type {}".format(str(vartype)))
                 else:
                     print("The dataframe does not contain variable {}.".format(str(key)))
         else:
@@ -131,7 +131,10 @@ class BrushingDataframe(pd.DataFrame):
 
         """
         #if not isinstance(self, pd.DataFrame):
-        #    raise TypeError("imput must be a dataframe type")
+        #    raise TypeError("**************input must be a dataframe type*************")
+        #print('************Checkking type***********')
+        #print(isinstance(self, pd.DataFrame))
+        #print('what happened??????????')
 
         if input_vars:
             self = self[input_vars]
