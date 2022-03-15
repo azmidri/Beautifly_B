@@ -130,6 +130,9 @@ class BrushingDataframe(pd.DataFrame):
           A print with the analysis or new clean columns .
 
         """
+        #if not isinstance(self, pd.DataFrame):
+        #    raise TypeError("imput must be a dataframe type")
+
         if input_vars:
             self = self[input_vars]
 
@@ -210,6 +213,7 @@ class BrushingDataframe(pd.DataFrame):
         -------
           A print with the analysis or new transformed columns.                
         """
+
         df = self.copy()
         if input_vars:
             df = df[input_vars]
